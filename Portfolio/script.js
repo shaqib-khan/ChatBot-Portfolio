@@ -131,55 +131,44 @@ class PortfolioChatbot {
         this.portfolioData = {
             about: {
                 name: "Shaqib Khan",
-                title: "B.Tech Computer Science Student",
-                description: "I am a B.Tech student specializing in Computer Science and Engineering, with a strong interest in web development and programming. I have hands-on experience with frontend technologies like HTML, CSS, and JavaScript, and I'm also familiar with backend and general-purpose programming languages including Python, JavaScript, MySQL and C/C++. I've applied my skills by building a project using web development, which helped me understand the practical aspects of designing and developing user-friendly websites. I'm always eager to learn new technologies and improve my development skills.",
-                location: "Lucknow, UP, India",
+                title: "Full-Stack Developer (MERN) & B.Tech CS Student",
+                description: "Full-Stack Developer with hands-on experience building web applications using the MERN stack (MongoDB, Express.js, React, Node.js). Strong foundation in HTML, CSS, JavaScript, TypeScript, RESTful APIs, database design, Git, and GitHub, plus core computer science concepts. Currently pursuing a B.Tech in Computer Science at Integral University, Lucknow, and expanding my skillset by learning about AI.",
+                location: "Indira Nagar, Lucknow, UP, India",
                 email: "shaqibkhan135@gmail.com",
-                phone: "+91 8953077757",
+                phone: "+91-8953077757",
                 github: "https://github.com/shaqib-khan",
-                linkedin: "https://linkedin.com/in/shaqib-khan"
+                linkedin: "https://linkedin.com/in/shaqib-khan/"
             },
             skills: {
-                frontend: ["HTML5", "CSS3", "JavaScript"],
-                backend: ["Python", "JavaScript"],
-                database: ["MySQL"],
-                programming: ["C", "C++", "Python", "JavaScript"]
+                frontend: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "NextJS", "TailwindCSS"],
+                backend: ["Node.js", "Express.js", "Python"],
+                database: ["MongoDB", "PostgreSQL", "SQL"],
+                programming: ["Python", "C/C++", "JavaScript", "TypeScript", "Java", "SQL"],
+                tools: ["Git", "GitHub", "VSCode", "Deployment & Hosting"]
             },
             projects: [
                 {
-                    title: "Ball Game",
-                    description: "A classic Breakout game implemented in Java using Swing and AWT components.",
-                    technologies: ["Java", "Swing", "AWT"],
-                    link: "https://shaqib-khan.github.io/Ball-Game/",
+                    title: "SyncPlay (SyncTube)",
+                    description: "Real-Time YouTube Watch Party Platform with synchronized playback via YouTube IFrame API & Socket.IO, role-based access control, shared video queue, live party chat, and instant guest rooms.",
+                    technologies: ["React", "Node.js", "Express.js", "MongoDB", "Socket.IO"],
+                    link: "https://github.com/shaqib-khan/SyncPlay",
+                    liveLink: "https://syncplay-updated.vercel.app/",
                     status: "Completed"
                 },
                 {
-                    title: "KeyFrame Animation",
-                    description: "Interactive animations and effects using HTML and CSS keyframes to demonstrate advanced CSS animation techniques.",
-                    technologies: ["HTML5", "CSS3", "Keyframes"],
-                    link: "https://shaqib-khan.github.io/keyframe/",
-                    status: "Completed"
-                },
-                {
-                    title: "Amazon Clone",
-                    description: "This project is a static clone of the Amazon India website homepage, built using HTML and CSS. It replicates the user interface and layout of the original site to practice and demonstrate frontend development skills, focusing on structure, styling.",
-                    technologies: ["HTML5", "CSS3", "Responsive Design"],
-                    link: "https://shaqib-khan.github.io/Amazon-Clone/",
+                    title: "Cyber Law Awareness Portal",
+                    description: "MERN-stack educational portal focused on Indian Cyber Law, cybercrime identification, digital safety, and practical cyber awareness. Features an interactive Cyber Awareness Assessment Engine with safe threat simulations, scenario-based decisions, 10+ quizzes, learning progress, law mapping, study notes, and a client-side sandbox so real credentials, OTPs, and card data are never stored.",
+                    technologies: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript"],
+                    link: "https://github.com/shaqib-khan",
                     status: "Completed"
                 }
             ],
             experience: [
                 {
-                    company: "Tech Company Inc.",
-                    position: "Senior Frontend Developer",
-                    duration: "2022 - Present",
-                    description: "Led development of user-facing features for a SaaS platform serving 10k+ users"
-                },
-                {
-                    company: "Startup XYZ",
-                    position: "Full Stack Developer",
-                    duration: "2020 - 2022",
-                    description: "Built and maintained web applications using React and Node.js"
+                    company: "ETrain",
+                    position: "Python Data Science Intern",
+                    duration: "Jun. 2025 – Jul. 2025",
+                    description: "Completed industry-oriented training in Python, Pandas, NumPy, Matplotlib, and Seaborn. Collaborated in a 5-member team to perform EDA, data cleaning, customer segmentation, correlation analysis, and visualization on festive-season e-commerce sales data."
                 }
             ]
         };
@@ -230,8 +219,10 @@ class PortfolioChatbot {
             this.handleOption('about');
         } else if (lowerMessage.includes('skill') || lowerMessage.includes('technology')) {
             this.handleOption('skills');
-        } else if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
+        } else if (lowerMessage.includes('project') || lowerMessage.includes('work') || lowerMessage.includes('synctube') || lowerMessage.includes('syncplay') || lowerMessage.includes('cyber')) {
             this.handleOption('projects');
+        } else if (lowerMessage.includes('experience') || lowerMessage.includes('intern')) {
+            this.showExperience();
         } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
             this.handleOption('contact');
         } else if (lowerMessage.includes('social') || lowerMessage.includes('github') || lowerMessage.includes('linkedin')) {
@@ -311,6 +302,14 @@ class PortfolioChatbot {
             message += `<span class="skill-tag">${skill}</span>`;
         });
         message += '</p>';
+
+        if (skills.tools && skills.tools.length) {
+            message += '<p><strong>Tools & Version Control:</strong><br>';
+            skills.tools.forEach(skill => {
+                message += `<span class="skill-tag">${skill}</span>`;
+            });
+            message += '</p>';
+        }
         
         this.addBotMessage(message);
         setTimeout(() => {
@@ -331,7 +330,7 @@ class PortfolioChatbot {
                         <p><strong>Technologies:</strong></p>
                         ${project.technologies.map(tech => `<span class="project-tech">${tech}</span>`).join('')}
                         <p><strong>Status:</strong> ${project.status}</p>
-                        <p><strong>Link:</strong> <a href="${project.link}" target="_blank">View on GitHub</a></p>
+                        <p><strong>Link:</strong> <a href="${project.link}" target="_blank">View on GitHub</a>${project.liveLink ? ` | <a href="${project.liveLink}" target="_blank">Live Demo</a>` : ''}</p>
                     </div>
                 `;
                 this.addBotMessage(projectHtml);
@@ -422,9 +421,13 @@ class PortfolioChatbot {
 
     showResume() {
         const message = `
-            <p><strong>Download My Resume</strong> 📄</p>
-            <p>Click the link below to download my latest resume:</p>
-            <p><a href="#" onclick="alert('Resume download would be implemented here!')" style="background: linear-gradient(135deg, #FDEB9E 0%, #006A67 100%); color: #000B58; padding: 10px 20px; border-radius: 25px; text-decoration: none; display: inline-block; margin: 10px 0; font-weight: 600; box-shadow: 0 2px 8px rgba(253, 235, 158, 0.3);">📥 Download Resume (PDF)</a></p>
+            <p><strong>My Resume</strong> 📄</p>
+            <p>View or download my latest resume (PDF):</p>
+            <p style="display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0;">
+                <a href="resume.pdf" download="Shaqib_Khan_Resume.pdf" style="background: linear-gradient(135deg, #FDEB9E 0%, #006A67 100%); color: #000B58; padding: 10px 18px; border-radius: 25px; text-decoration: none; display: inline-block; font-weight: 600; box-shadow: 0 2px 8px rgba(253, 235, 158, 0.3);">📥 Download Resume (PDF)</a>
+                <a href="resume.pdf" target="_blank" style="background: #1a2b32; color: #00a884; padding: 10px 18px; border-radius: 25px; text-decoration: none; display: inline-block; font-weight: 600; border: 1px solid #00a884;">👁️ View Resume</a>
+            </p>
+            <p><strong>Highlights:</strong> B.Tech CS @ Integral University (2023–Present) | Python Data Science Intern @ ETrain | MERN Stack Developer</p>
             <p>You can also view my detailed profile on LinkedIn or check out my code repositories on GitHub! 🔗</p>
         `;
         this.addBotMessage(message);
